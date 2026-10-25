@@ -141,8 +141,13 @@ class DocumentWizard {
             if (resp.ok) {
                 const data = await resp.json();
                 if (data.name) {
-                    // Find the name input field
-                    const nameInput = document.querySelector('[name$="_name"]');
+                    // Extract prefix from inn field name (e.g., "recipient_inn" -> "recipient")
+                    const prefix = innInput.name.replace(/_inn$/, '');
+                    const nameField = `${prefix}_name`;
+                    const addressField = `${prefix}_address`;
+
+                    // Fill name field
+                    const nameInput = document.querySelector(`[name="${nameField}"]`);
                     if (nameInput) {
                         nameInput.value = data.name;
                         this.formData[nameInput.name] = data.name;
@@ -154,8 +159,9 @@ class DocumentWizard {
                         }
                         this.saveDraft();
                     }
+                    // Fill address field
                     if (data.address) {
-                        const addressInput = document.querySelector('[name$="_address"]');
+                        const addressInput = document.querySelector(`[name="${addressField}"]`);
                         if (addressInput) {
                             addressInput.value = data.address;
                             this.formData[addressInput.name] = data.address;
