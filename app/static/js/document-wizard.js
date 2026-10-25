@@ -106,37 +106,91 @@ class DocumentWizard {
                 this.saveDraft();
             }
         });
+
+        // Auto-fill INN on blur
+        const innInputs = form.querySelectorAll('[name$="_inn"]');
+        innInputs.forEach(innInput => {
+            innInput.addEventListener('blur', () => {
+                const inn = innInput.value.replace(/\s/g, '');
+                if (inn.length >= 10 && inn.length <= 12 && /^\d+$/.test(inn)) {
+                    this.autoFillByInn(inn, innInput);
+                }
+            });
+        });
     }
 
     bindAutoFill() {
-        // Auto-fill by INN if present
-        const innInput = document.querySelector('[name$="_inn"], [name="issuer_inn"], [name="performer_inn"], [name="donor_inn"], [name="applicant_inn"]');
-        if (innInput && innInput.value) {
-            this.autoFillByInn(innInput.value);
+        // Auto-fill by INN if present (from draft)
+        const innInput = document.querySelector('[name$="_inn"]');
+        if (innInput && innInput.value && innInput.value.length >= 10) {
+            this.autoFillByInn(innInput.value, innInput);
         }
     }
 
-    async autoFillByInn(inn) {
+    async autoFillByInn(inn, innInput) {
+        // Show loading indicator
+        const sourceEl = document.getElementById(`source-${innInput.name}`);
+        if (sourceEl) {
+            sourceEl.textContent = 'загрузка...';
+            sourceEl.classList.remove('manual');
+            sourceEl.style.color = '#0d6efd';
+        }
+
         try {
             const resp = await fetch(`/api/auto-fill/inn/${inn}`);
             if (resp.ok) {
                 const data = await resp.json();
                 if (data.name) {
+                    // Find the name input field
                     const nameInput = document.querySelector('[name$="_name"]');
                     if (nameInput) {
                         nameInput.value = data.name;
                         this.formData[nameInput.name] = data.name;
-                        const sourceEl = document.getElementById(`source-${nameInput.name}`);
-                        if (sourceEl) {
-                            sourceEl.textContent = 'заполнено из ЕГРЮЛ';
-                            sourceEl.classList.remove('manual');
+                        const nameSourceEl = document.getElementById(`source-${nameInput.name}`);
+                        if (nameSourceEl) {
+                            nameSourceEl.textContent = 'заполнено из ЕГРЮЛ';
+                            nameSourceEl.classList.remove('manual');
+                            nameSourceEl.style.color = '#198754';
                         }
                         this.saveDraft();
                     }
+                    if (data.address) {
+                        const addressInput = document.querySelector('[name$="_address"]');
+                        if (addressInput) {
+                            addressInput.value = data.address;
+                            this.formData[addressInput.name] = data.address;
+                            const addrSourceEl = document.getElementById(`source-${addressInput.name}`);
+                            if (addrSourceEl) {
+                                addrSourceEl.textContent = 'заполнено из ЕГРЮЛ';
+                                addrSourceEl.classList.remove('manual');
+                                addrSourceEl.style.color = '#198754';
+                            }
+                        }
+                    }
+                    if (sourceEl) {
+                        sourceEl.textContent = 'данные подтянуты';
+                        sourceEl.style.color = '#198754';
+                    }
+                } else {
+                    if (sourceEl) {
+                        sourceEl.textContent = 'данные не найдены';
+                        sourceEl.classList.add('manual');
+                        sourceEl.style.color = '#6c757d';
+                    }
+                }
+            } else {
+                if (sourceEl) {
+                    sourceEl.textContent = 'ошибка запроса';
+                    sourceEl.classList.add('manual');
+                    sourceEl.style.color = '#dc3545';
                 }
             }
         } catch (e) {
-            // Graceful degradation
+            if (sourceEl) {
+                sourceEl.textContent = 'ошибка сети';
+                sourceEl.classList.add('manual');
+                sourceEl.style.color = '#dc3545';
+            }
         }
     }
 

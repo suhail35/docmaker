@@ -26,14 +26,14 @@ class TestRoutes:
         """Privacy page should return 200."""
         response = await client.get("/privacy")
         assert response.status_code == 200
-        assert b"конфиденциальности" in response.content
+        assert "\u041f\u043e\u043b\u0438\u0442\u0438\u043a\u0430" in response.text
 
     @pytest.mark.asyncio
     async def test_document_wizard(self, client: AsyncClient):
         """Document wizard should return 200."""
         response = await client.get("/document/invoice")
         assert response.status_code == 200
-        assert b"Счёт" in response.content
+        assert "\u0421\u0447\u0435\u0442" in response.text
 
     @pytest.mark.asyncio
     async def test_document_404(self, client: AsyncClient):
