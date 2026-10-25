@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+            @bottom-center {
+                content: "Документ сформирован автоматически. Не является юриди��еской консультацией.";
+                font-size: 7pt;
+                color: #666;
+            }
+        }
+        body {
+            font-family: 'PT Sans', Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+        }
+        .header { text-align: center; margin-bottom: 20px; }
+        .title { font-size: 16pt; font-weight: bold; margin: 15px 0; }
+        .info-row { display: flex; margin-bottom: 5px; }
+        .info-label { width: 180px; font-weight: bold; }
+        .info-value { flex: 1; }
+        .table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        .table th, .table td { border: 1px solid #000; padding: 5px 8px; text-align: left; }
+        .table th { background: #f0f0f0; }
+        .total { text-align: right; margin-top: 10px; font-weight: bold; }
+        .footer-note { margin-top: 30px; font-size: 9pt; }
+        .version { font-size: 7pt; color: #999; float: right; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">СЧЕТ № {{ data.invoice_number }}</div>
+        <div>{{ data.invoice_date }}</div>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <div class="info-row">
+            <span class="info-label">Исполнитель (самозанятый):</span>
+            <span class="info-value">{{ data.issuer_name }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">ИНН исполнителя:</span>
+            <span class="info-value">{{ data.issuer_inn }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Телефон:</span>
+            <span class="info-value">{{ data.issuer_phone }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Адрес:</span>
+            <span class="info-value">{{ data.issuer_address }}</span>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <div class="info-row">
+            <span class="info-label">Заказчик:</span>
+            <span class="info-value">{{ data.recipient_name }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">ИНН заказчика:</span>
+            <span class="info-value">{{ data.recipient_inn }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Адрес заказчика:</span>
+            <span class="info-value">{{ data.recipient_address }}</span>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width: 30px;">№</th>
+                <th>Наименование услуги</th>
+                <th style="width: 120px;">Сумма (руб.)</th>
+                <th style="width: 150px;">НДС</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>{{ data.service_description }}</td>
+                <td>{{ "%.2f"|format(data.service_amount) }}</td>
+                <td>не облагается (НПД)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="total">
+        Итого: {{ "%.2f"|format(data.service_amount) }} руб.
+    </div>
+    <div class="total" style="margin-top: 5px;">
+        В том числе НДС: не облагается
+    </div>
+
+    <div class="footer-note">
+        Оплата способом, указанным в реквизитах:
+        {% if data.payment_method == "bank_transfer" %}
+        банковским переводом на расчетный счет исполнителя.
+        {% else %}
+        наличными денежными средствами.
+        {% endif %}
+    </div>
+
+    <span class="version">v{{ data.version }}</span>
+</body>
+</html>

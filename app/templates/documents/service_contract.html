@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page { size: A4; margin: 20mm; @bottom-center { content: "Документ сформирован автоматически. Не является юридической консультацией."; font-size: 7pt; color: #666; } }
+        body { font-family: 'PT Sans', Arial, sans-serif; font-size: 11pt; line-height: 1.4; }
+        .title { text-align: center; font-size: 14pt; font-weight: bold; margin: 20px 0; }
+        .info-row { display: flex; margin-bottom: 5px; }
+        .info-label { width: 150px; font-weight: bold; }
+        .info-value { flex: 1; }
+        .section { margin: 15px 0; }
+        .section-title { font-weight: bold; margin-bottom: 5px; }
+        .signature-block { display: flex; justify-content: space-between; margin-top: 40px; }
+        .signature-side { width: 45%; }
+        .signature-line { border-top: 1px solid #000; margin-top: 40px; padding-top: 5px; }
+        .version { font-size: 7pt; color: #999; float: right; }
+    </style>
+</head>
+<body>
+    <div class="title">ДОГОВОР ВОЗМЕЗДНОГО ОКАЗАНИЯ УСЛУГ № {{ data.contract_number }}</div>
+    <p style="text-align: right;">г. {{ "_____________" }}</p>
+    <p style="text-align: right;">{{ data.contract_date }}</p>
+
+    <div class="section">
+        <p>Общество с ограниченной ответственностью «{{ data.provider_name }}», именуемое в дальнейшем «Исполнитель», в лице ________________________, действующего на основании Устава, с одной стороны, и</p>
+        <p>{{ data.client_name }}, именуемый в дальнейшем «Заказчик», с другой стороны, совместно именуемые «Стороны», заключили настоящий Договор о нижеследующем:</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">1. ПРЕДМЕТ ДОГОВОРА</div>
+        <p>1.1. Исполнитель обязуется по заданию Заказчика оказать следующие услуги: {{ data.subject }}, а Заказчик обязуется оплатить эти услуги.</p>
+        <p>1.2. Срок оказания услуг: с {{ data.term_start }} по {{ data.term_end }}.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">2. СТОИМОСТЬ И ПОРЯДОК ОПЛАТЫ</div>
+        <p>2.1. Общая стоимость услуг составляет: {{ "%.2f"|format(data.price) }} руб.</p>
+        <p>2.2. Порядок оплаты: {{ data.payment_terms }}.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">3. РЕКВИЗИТЫ И ПОДПИСИ СТОРОН</div>
+    </div>
+
+    <div style="display: flex; gap: 40px; margin-top: 20px;">
+        <div style="flex: 1;">
+            <strong>Исполнитель:</strong><br>
+            {{ data.provider_name }}<br>
+            ИНН: {{ data.provider_inn }}<br>
+            Адрес: {{ data.provider_address }}
+        </div>
+        <div style="flex: 1;">
+            <strong>Заказчик:</strong><br>
+            {{ data.client_name }}<br>
+            ИНН: {{ data.client_inn }}<br>
+            Адрес: {{ data.client_address }}
+        </div>
+    </div>
+
+    <div class="signature-block">
+        <div class="signature-side">
+            <strong>Исполнитель:</strong>
+            <div class="signature-line">_________________</div>
+        </div>
+        <div class="signature-side">
+            <strong>Заказчик:</strong>
+            <div class="signature-line">_________________</div>
+        </div>
+    </div>
+
+    <span class="version">v{{ data.version }}</span>
+</body>
+</html>

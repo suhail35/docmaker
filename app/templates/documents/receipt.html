@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page { size: A4; margin: 20mm; @bottom-center { content: "Документ сформирован автоматически. Не является юридической консультацией."; font-size: 7pt; color: #666; } }
+        body { font-family: 'PT Sans', Arial, sans-serif; font-size: 11pt; line-height: 1.4; }
+        .title { text-align: center; font-size: 14pt; font-weight: bold; margin: 20px 0; }
+        .info-row { display: flex; margin-bottom: 5px; }
+        .info-label { width: 180px; font-weight: bold; }
+        .info-value { flex: 1; }
+        .qr-placeholder { text-align: center; margin: 20px 0; padding: 20px; border: 2px dashed #ccc; }
+        .version { font-size: 7pt; color: #999; float: right; }
+    </style>
+</head>
+<body>
+    <div class="title">ЧЕК-ПОДТВЕРЖДЕНИЕ</div>
+    <p style="text-align: right;">от {{ data.payment_date }}</p>
+
+    <div style="margin-bottom: 15px;">
+        <div class="info-row">
+            <span class="info-label">Исполнитель:</span>
+            <span class="info-value">{{ data.issuer_name }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">ИНН:</span>
+            <span class="info-value">{{ data.issuer_inn }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Адрес:</span>
+            <span class="info-value">{{ data.issuer_address }}</span>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <div class="info-row">
+            <span class="info-label">Дата оплаты:</span>
+            <span class="info-value">{{ data.payment_date }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Сумма:</span>
+            <span class="info-value">{{ "%.2f"|format(data.amount) }} руб.</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Оплата за:</span>
+            <span class="info-value">{{ data.service_description }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Способ оплаты:</span>
+            <span class="info-value">{{ "банковским переводом" if data.payment_method == "bank_transfer" else "наличными" }}</span>
+        </div>
+    </div>
+
+    <div class="qr-placeholder">
+        <p><strong>QR-код для подтверждения оплаты</strong></p>
+        <p style="font-size: 9pt; color: #999;">[Здесь будет размещен QR-код]</p>
+    </div>
+
+    <p style="font-size: 9pt; color: #555; margin-top: 20px;">
+        Настоящий чек-подтверждение сформирован автоматически и является подтверждением получения оплаты.
+    </p>
+
+    <span class="version">v{{ data.version }}</span>
+</body>
+</html>

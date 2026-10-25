@@ -1,0 +1,47 @@
+body {
+    font-family: 'PT Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.pdf-footer {
+    font-size: 8pt;
+    color: #666;
+    border-top: 1px solid #ddd;
+    padding-top: 5px;
+}
+
+.source-indicator {
+    font-size: 0.75rem;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.document-card {
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+
+.document-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.wizard-step {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.form-source {
+    font-size: 0.75rem;
+    color: #198754;
+    margin-top: 2px;
+}
+
+.form-source.manual {
+    color: #6c757d;
+}

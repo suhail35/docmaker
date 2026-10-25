@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+            @bottom-center {
+                content: "Документ сформирован автоматически. Не является юридической консультацией.";
+                font-size: 7pt;
+                color: #666;
+            }
+        }
+        body {
+            font-family: 'PT Sans', Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+        }
+        .title { text-align: center; font-size: 14pt; font-weight: bold; margin: 20px 0; }
+        .subtitle { text-align: center; font-size: 10pt; color: #555; margin-bottom: 20px; }
+        .info-row { display: flex; margin-bottom: 5px; }
+        .info-label { width: 180px; font-weight: bold; }
+        .info-value { flex: 1; }
+        .section { margin: 15px 0; }
+        .section-title { font-weight: bold; margin-bottom: 5px; }
+        .signature-block { display: flex; justify-content: space-between; margin-top: 40px; }
+        .signature-side { width: 45%; }
+        .signature-line { border-top: 1px solid #000; margin-top: 40px; padding-top: 5px; }
+        .version { font-size: 7pt; color: #999; float: right; }
+    </style>
+</head>
+<body>
+    <div class="title">АКТ ВЫПОЛНЕННЫХ РАБОТ/УСЛУГ</div>
+    <div class="subtitle">
+        № {{ data.contract_number }} от {{ data.contract_date }}
+    </div>
+
+    <div class="section">
+        <div class="section-title">Исполнитель:</div>
+        <div class="info-row">
+            <span class="info-label">Наименование:</span>
+            <span class="info-value">{{ data.performer_name }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">ИНН:</span>
+            <span class="info-value">{{ data.performer_inn }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Адрес:</span>
+            <span class="info-value">{{ data.performer_address }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Заказчик:</div>
+        <div class="info-row">
+            <span class="info-label">Наименование:</span>
+            <span class="info-value">{{ data.customer_name }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">ИНН:</span>
+            <span class="info-value">{{ data.customer_inn }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Адрес:</span>
+            <span class="info-value">{{ data.customer_address }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Выполненные работы/услуги:</div>
+        <p>{{ data.work_description }}</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Стоимость:</div>
+        <p>Общая стоимость выполненных работ/услуг составляет: <strong>{{ "%.2f"|format(data.work_amount) }} руб.</strong></p>
+    </div>
+
+    <div class="section">
+        <p>Заказчик подтверждает, что работы/услуги выполнены в полном объеме и в срок, указанный в договоре №{{ data.contract_number }} от {{ data.contract_date }}.</p>
+        <p>Претензий по качеству, срокам и объему выполненных работ/услуг Заказчик не имеет.</p>
+    </div>
+
+    <div class="signature-block">
+        <div class="signature-side">
+            <strong>Исполнитель:</strong>
+            <div class="signature-line">{{ data.performer_name }}</div>
+        </div>
+        <div class="signature-side">
+            <strong>Заказчик:</strong>
+            <div class="signature-line">{{ data.customer_name }}</div>
+        </div>
+    </div>
+
+    <span class="version">v{{ data.version }}</span>
+</body>
+</html>

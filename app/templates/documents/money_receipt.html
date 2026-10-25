@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page { size: A4; margin: 20mm; @bottom-center { content: "Документ сформирован автоматически. Не является юридической консультацией."; font-size: 7pt; color: #666; } }
+        body { font-family: 'PT Sans', Arial, sans-serif; font-size: 11pt; line-height: 1.4; }
+        .title { text-align: center; font-size: 14pt; font-weight: bold; margin: 20px 0; }
+        .info-row { display: flex; margin-bottom: 5px; }
+        .info-label { width: 180px; font-weight: bold; }
+        .info-value { flex: 1; }
+        .section { margin: 15px 0; }
+        .signature-block { margin-top: 40px; }
+        .signature-line { border-top: 1px solid #000; margin-top: 40px; padding-top: 5px; }
+        .version { font-size: 7pt; color: #999; float: right; }
+    </style>
+</head>
+<body>
+    <div class="title">РАСПИСКА В ПОЛУЧЕНИИ ДЕНЕЖНЫХ СРЕДСТВ</div>
+
+    <div class="section">
+        <p>Я, <strong>{{ data.recipient_name }}</strong>, паспорт: {{ data.recipient_passport }>, зарегистрированный(аяся) по адресу: {{ data.recipient_address }>,</p>
+        <p>получил(а) от гражданина(ки) <strong>{{ data.payer_name }}</strong>, паспорт: {{ data.payer_passport }},</p>
+        <p>денежные средства в размере <strong>{{ "%.2f"|format(data.amount) }} руб.</strong> ({{ data.amount_in_words }} рублей 00 копеек),</p>
+        <p>в качестве: {{ data.purpose }}.</p>
+    </div>
+
+    <div class="section">
+        <p>Дата получения: <strong>{{ data.receipt_date }}</strong></p>
+        <p>Место составления: {{ "_____________" }}</p>
+    </div>
+
+    <div class="signature-block">
+        <p style="margin-top: 40px;"><strong>Подпись получателя:</strong></p>
+        <div class="signature-line">{{ data.recipient_name }} / _________________</div>
+        <p style="font-size: 9pt; color: #555; margin-top: 10px;">
+            Расписка написана собственноручно. Получил(а) денежные средства в полном объеме. Претензий не имею.
+        </p>
+    </div>
+
+    <span class="version">v{{ data.version }}</span>
+</body>
+</html>

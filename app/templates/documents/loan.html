@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page { size: A4; margin: 20mm; @bottom-center { content: "Документ сформирован автоматически. Не является юридической консультацией."; font-size: 7pt; color: #666; } }
+        body { font-family: 'PT Sans', Arial, sans-serif; font-size: 11pt; line-height: 1.4; }
+        .title { text-align: center; font-size: 14pt; font-weight: bold; margin: 20px 0; }
+        .info-row { display: flex; margin-bottom: 5px; }
+        .info-label { width: 150px; font-weight: bold; }
+        .info-value { flex: 1; }
+        .section { margin: 15px 0; }
+        .signature-block { display: flex; justify-content: space-between; margin-top: 40px; }
+        .signature-side { width: 45%; }
+        .signature-line { border-top: 1px solid #000; margin-top: 40px; padding-top: 5px; }
+        .version { font-size: 7pt; color: #999; float: right; }
+    </style>
+</head>
+<body>
+    <div class="title">ДОГОВОР ЗАЙМА МЕЖДУ ФИЗИЧЕСКИМИ ЛИЦАМИ № {{ "____" }}</div>
+    <p style="text-align: right;">г. {{ "_____________" }}</p>
+    <p style="text-align: right;">{{ data.loan_date }}</p>
+
+    <div class="section">
+        <p>Гражданин(ка) <strong>{{ data.lender_name }}</strong>, паспорт: {{ data.lender_passport }>, проживающий(ая) по адресу: {{ data.lender_address }}, именуемый в дальнейшем «Займодавец», с одной стороны, и</p>
+        <p>Гражданин(ка) <strong>{{ data.borrower_name }}</strong>, паспорт: {{ data.borrower_passport }>, проживающий(ая) по адресу: {{ data.borrower_address }>, именуемый в дальнейшем «Заёмщик», с другой стороны, заключили настоящий Договор о нижеследующем:</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">1. ПРЕДМЕТ ДОГОВОРА</div>
+        <p>1.1. Займодавец передает в собственность Заёмщика, а Заёмщик принимает денежные средства в размере <strong>{{ "%.2f"|format(data.loan_amount) }} руб.</strong> (далее — «Заем»).<br>
+        1.2. Заем предоставляется на следующих условиях:</p>
+        <ul>
+            <li>Дата предоставления Заема: {{ data.loan_date }}</li>
+            <li>Срок возврата: {{ data.return_date }}</li>
+            <li>Проценты по Займу: {{ data.interest_rate }}</li>
+            <li>Порядок возврата: {{ data.repayment_terms }}</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">2. РЕКВИЗИТЫ И ПОДПИСИ СТОРОН</div>
+    </div>
+
+    <div style="display: flex; gap: 40px; margin-top: 20px;">
+        <div style="flex: 1;">
+            <strong>Займодавец:</strong><br>
+            {{ data.lender_name }}<br>
+            Паспорт: {{ data.lender_passport }}<br>
+            Адрес: {{ data.lender_address }}
+        </div>
+        <div style="flex: 1;">
+            <strong>Заёмщик:</strong><br>
+            {{ data.borrower_name }}<br>
+            Паспорт: {{ data.borrower_passport }}<br>
+            Адрес: {{ data.borrower_address }}
+        </div>
+    </div>
+
+    <div class="signature-block">
+        <div class="signature-side">
+            <strong>Займодавец:</strong>
+            <div class="signature-line">_________________</div>
+        </div>
+        <div class="signature-side">
+            <strong>Заёмщик:</strong>
+            <div class="signature-line">_________________</div>
+        </div>
+    </div>
+
+    <span class="version">v{{ data.version }}</span>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page { size: A4; margin: 20mm; @bottom-center { content: "Документ сформирован автоматически. Не является юридической консультацией."; font-size: 7pt; color: #666; } }
+        body { font-family: 'PT Sans', Arial, sans-serif; font-size: 11pt; line-height: 1.4; }
+        .title { text-align: center; font-size: 14pt; font-weight: bold; margin: 20px 0; }
+        .info-row { display: flex; margin-bottom: 5px; }
+        .info-label { width: 180px; font-weight: bold; }
+        .info-value { flex: 1; }
+        .section { margin: 15px 0; }
+        .signature-block { display: flex; justify-content: space-between; margin-top: 40px; }
+        .signature-side { width: 45%; }
+        .signature-line { border-top: 1px solid #000; margin-top: 40px; padding-top: 5px; }
+        .version { font-size: 7pt; color: #999; float: right; }
+    </style>
+</head>
+<body>
+    <div class="title">ДОГОВОР ДАРЕНИЯ ДВИЖИМОГО ИМУЩЕСТВА</div>
+    <p style="text-align: right;">г. {{ "_____________" }}</p>
+    <p style="text-align: right;">{{ data.gift_date }}</p>
+
+    <div class="section">
+        <p>Гражданин(ка) <strong>{{ data.donor_name }}</strong>, паспорт: {{ data.donor_passport }>, проживающий(ая) по адресу: {{ data.donor_address }}, именуемый в дальнейшем «Даритель», с одной стороны, и</p>
+        <p>Гражданин(ка) <strong>{{ data.donee_name }}</strong>, паспорт: {{ data.donee_passport }>, проживающий(ая) по адресу: {{ data.donee_address }>, являющийся(аяся) {{ data.donee_relationship }>, именуемый в дальнейшем «Одаряемый», с другой стороны, заключили настоящий Договор о нижеследующем:</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">1. ПРЕДМЕТ ДОГОВОРА</div>
+        <p>1.1. Даритель безвозмездно передает в собственность Одаряемому движимое имущество: <strong>{{ data.property_description }}</strong>.</p>
+        <p>1.2. Оценка передаваемого имущества: {{ "%.2f"|format(data.property_value) }} руб.</p>
+        <p>1.3. Одаряемый принимает дар.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">2. ЗАКЛЮЧИТЕЛЬНЫЕ ПОЛОЖЕНИЯ</div>
+        <p>2.1. Настоящий договор вступает в силу с момента его подписания сторонами.</p>
+        <p>2.2. Право собственности на дар переходит к Одаряемому с момента передачи имущества.</p>
+    </div>
+
+    <div class="signature-block">
+        <div class="signature-side">
+            <strong>Даритель:</strong>
+            <div class="signature-line">{{ data.donor_name }}</div>
+        </div>
+        <div class="signature-side">
+            <strong>Одаряемый:</strong>
+            <div class="signature-line">{{ data.donee_name }}</div>
+        </div>
+    </div>
+
+    <span class="version">v{{ data.version }}</span>
+</body>
+</html>

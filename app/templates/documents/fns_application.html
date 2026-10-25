@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page { size: A4; margin: 20mm; @bottom-center { content: "Документ сформирован автоматически. Не является юридической консультацией."; font-size: 7pt; color: #666; } }
+        body { font-family: 'PT Sans', Arial, sans-serif; font-size: 11pt; line-height: 1.4; }
+        .title { text-align: center; font-size: 14pt; font-weight: bold; margin: 20px 0; }
+        .info-row { display: flex; margin-bottom: 5px; }
+        .info-label { width: 180px; font-weight: bold; }
+        .info-value { flex: 1; }
+        .section { margin: 15px 0; }
+        .signature-block { margin-top: 40px; }
+        .signature-line { border-top: 1px solid #000; margin-top: 40px; padding-top: 5px; }
+        .version { font-size: 7pt; color: #999; float: right; }
+    </style>
+</head>
+<body>
+    <div class="title">ЗАЯВЛЕНИЕ-ПОЯСНЕНИЕ</div>
+
+    <div class="section">
+        <p>В {{ data.fns_office }}</p>
+        <p>от {{ data.applicant_name }}</p>
+        <p>ИНН: {{ data.applicant_inn }}</p>
+        <p>Адрес: {{ data.applicant_address }}</p>
+        <p>Телефон: {{ data.applicant_phone }}</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">{{ data.application_type|upper() }}</div>
+
+        <p><strong>Тема:</strong> {{ data.subject }}</p>
+
+        <p><strong>Пояснение:</strong></p>
+        <p>{{ data.details }}</p>
+    </div>
+
+    <div class="section">
+        <p>Дата: <strong>{{ data.application_date }}</strong></p>
+    </div>
+
+    <div class="signature-block">
+        <p><strong>Подпись заявителя:</strong></p>
+        <div class="signature-line">{{ data.applicant_name }} / _________________</div>
+    </div>
+
+    <span class="version">v{{ data.version }}</span>
+</body>
+</html>

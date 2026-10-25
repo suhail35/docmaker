@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page { size: A4; margin: 20mm; @bottom-center { content: "Документ сформирован автоматически. Не является юридической консультацией."; font-size: 7pt; color: #666; } }
+        body { font-family: 'PT Sans', Arial, sans-serif; font-size: 11pt; line-height: 1.4; }
+        .title { text-align: center; font-size: 14pt; font-weight: bold; margin: 20px 0; }
+        .info-row { display: flex; margin-bottom: 5px; }
+        .info-label { width: 180px; font-weight: bold; }
+        .info-value { flex: 1; }
+        .section { margin: 15px 0; }
+        .signature-block { margin-top: 40px; }
+        .signature-line { border-top: 1px solid #000; margin-top: 40px; padding-top: 5px; }
+        .version { font-size: 7pt; color: #999; float: right; }
+    </style>
+</head>
+<body>
+    <div class="title">СОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ</div>
+
+    <div class="section">
+        <p>Я, <strong>{{ data.subject_full_name }}</strong>,</p>
+        <p>паспорт: {{ data.subject_passport }>, ИНН: {{ data.subject_inn }>,</p>
+        <p>зарегистрированный(аяся) по адресу: {{ data.subject_address }>,</p>
+        <p>телефон: {{ data.subject_phone }>, email: {{ data.subject_email }>,</p>
+    </div>
+
+    <div class="section">
+        <p>Выражаю своё согласие на обработку персональных данных оператору:</p>
+        <p><strong>{{ data.operator_name }}</strong>, адрес: {{ data.operator_address }>,</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">1. ЦЕЛИ ОБРАБОТКИ</div>
+        <p>{{ data.purposes }}</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">2. ПЕРЕЧЕНЬ ПЕРСОНАЛЬНЫХ ДАННЫХ</div>
+        <p>{{ data.data_types }}</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">3. СРОК ДЕЙСТВИЯ СОГЛАСИЯ</div>
+        <p>Настоящее согласие действует в течение <strong>{{ data.consent_period }}</strong> с момента его подписания.</p>
+    </div>
+
+    <div class="section">
+        <p>Дата: <strong>{{ data.consent_date }}</strong></p>
+    </div>
+
+    <div class="signature-block">
+        <p><strong>Подпись субъекта:</strong></p>
+        <div class="signature-line">{{ data.subject_full_name }} / _________________</div>
+    </div>
+
+    <span class="version">v{{ data.version }}</span>
+</body>
+</html>
