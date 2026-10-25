@@ -99,6 +99,16 @@ async def generate_pdf(doc_type: str, request: Request):
     filter_keys = set(data_class.__dataclass_fields__.keys())
     filtered = {k: v for k, v in body.items() if k in filter_keys}
 
+    # Convert numeric fields from strings
+    numeric_fields = {"service_amount", "work_amount", "price", "amount", "property_value",
+                      "loan_amount", "service_amount"}
+    for field in numeric_fields:
+        if field in filtered and isinstance(filtered[field], str):
+            try:
+                filtered[field] = float(filtered[field])
+            except (ValueError, TypeError):
+                filtered[field] = 0.0
+
     try:
         data = data_class(**filtered)
     except (ValidationError, TypeError) as e:

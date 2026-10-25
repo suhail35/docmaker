@@ -4,9 +4,14 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     fonts-noto-cjk \
     libpango-1.0-0 \
-    libgdk-pixbuf2.0-0 \
+    libpangoft2-1.0-0 \
+    libgdk-pixbuf-2.0-0 \
+    libgdk-pixbuf-xlib-2.0-0 \
+    libglib2.0-0 \
     libffi-dev \
     libcairo2 \
+    libxml2 \
+    libxslt1-dev \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
